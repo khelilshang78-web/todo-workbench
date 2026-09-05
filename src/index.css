@@ -1,0 +1,339 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 学术纸感 · 亮色：象牙纸白 + 牛津蓝墨色 + 学院金 + 牛津红 */
+    --background: 42 36% 95%;
+    --foreground: 216 36% 15%;
+    --card: 42 42% 97%;
+    --card-foreground: 216 36% 15%;
+    --popover: 42 42% 97%;
+    --popover-foreground: 216 36% 15%;
+    --primary: 214 100% 14%; /* 牛津蓝 #002147 */
+    --primary-foreground: 42 45% 96%;
+    --secondary: 40 26% 90%;
+    --secondary-foreground: 216 30% 20%;
+    --muted: 40 22% 91%;
+    --muted-foreground: 216 14% 36%;
+    --accent: 42 42% 89%;
+    --accent-foreground: 214 60% 18%;
+    --destructive: 350 69% 26%; /* 牛津红 oxblood */
+    --destructive-foreground: 42 45% 96%;
+    --border: 38 22% 82%;
+    --input: 38 18% 76%;
+    --ring: 214 100% 14%;
+    --brass: 40 52% 36%; /* 学院金 */
+    --brass-soft: 42 55% 92%;
+    --radius: 0.375rem;
+    --sidebar-background: 42 42% 97%;
+    --sidebar-foreground: 216 36% 15%;
+    --sidebar-primary: 214 100% 14%;
+    --sidebar-primary-foreground: 42 45% 96%;
+    --sidebar-accent: 42 42% 89%;
+    --sidebar-accent-foreground: 214 60% 18%;
+    --sidebar-border: 38 22% 82%;
+    --sidebar-ring: 214 100% 14%;
+  }
+
+  .dark {
+    /* 深夜书房：墨蓝纸 + 米白墨字 + 灯下金 */
+    --background: 222 26% 9%;
+    --foreground: 40 26% 87%;
+    --card: 222 22% 12%;
+    --card-foreground: 40 26% 87%;
+    --popover: 222 22% 12%;
+    --popover-foreground: 40 26% 87%;
+    --primary: 39 44% 54%;
+    --primary-foreground: 222 30% 10%;
+    --secondary: 222 18% 16%;
+    --secondary-foreground: 40 22% 84%;
+    --muted: 222 16% 15%;
+    --muted-foreground: 40 12% 62%;
+    --accent: 222 18% 17%;
+    --accent-foreground: 39 40% 70%;
+    --destructive: 350 52% 46%;
+    --destructive-foreground: 40 30% 92%;
+    --border: 220 14% 22%;
+    --input: 220 14% 28%;
+    --ring: 39 44% 54%;
+    --brass: 40 48% 58%;
+    --brass-soft: 222 18% 16%;
+    --sidebar-background: 222 22% 12%;
+    --sidebar-foreground: 40 26% 87%;
+    --sidebar-primary: 39 44% 54%;
+    --sidebar-primary-foreground: 222 30% 10%;
+    --sidebar-accent: 222 18% 17%;
+    --sidebar-accent-foreground: 39 40% 70%;
+    --sidebar-border: 220 14% 22%;
+    --sidebar-ring: 39 44% 54%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "EB Garamond", "Noto Serif SC", "Songti SC", "SimSun", serif;
+    font-size: 17px;
+    caret-color: hsl(var(--primary));
+    /* 极轻纸张噪点（纯 CSS 双层点纹） */
+    background-image:
+      radial-gradient(hsl(216 30% 20% / 0.035) 1px, transparent 1.3px),
+      radial-gradient(hsl(216 30% 20% / 0.022) 1px, transparent 1.3px);
+    background-size: 4px 4px, 7px 7px;
+    background-position: 0 0, 2px 3px;
+  }
+  .dark body {
+    background-image:
+      radial-gradient(hsl(40 30% 90% / 0.03) 1px, transparent 1.3px),
+      radial-gradient(hsl(40 30% 90% / 0.018) 1px, transparent 1.3px);
+  }
+  ::selection {
+    background: hsl(var(--primary) / 0.88);
+    color: hsl(var(--primary-foreground));
+  }
+  /* 细滚动条，纳入设计 */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.35);
+    border: 3px solid transparent;
+    border-radius: 8px;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.55);
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  input[type="date"],
+  input[type="time"] {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .font-title {
+    font-family: "EB Garamond", "Noto Serif SC", "Songti SC", "SimSun", serif;
+  }
+  .numerals {
+    font-variant-numeric: lining-nums tabular-nums;
+    font-feature-settings: "lnum", "tnum";
+  }
+}
+
+/* ── 期刊版面语言 ───────────────────────────── */
+
+/* 刊头双细线（上粗下细） */
+.masthead-rule {
+  border-top: 2.5px solid hsl(var(--foreground));
+  padding-top: 3px;
+}
+.masthead-rule::after {
+  content: "";
+  display: block;
+  border-top: 1px solid hsl(var(--foreground));
+}
+
+/* 栏题：小号大写字距 */
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+
+/* 首字下沉 */
+.dropcap::first-letter {
+  float: left;
+  font-size: 2.5em;
+  line-height: 0.82;
+  padding-right: 0.1em;
+  padding-top: 0.06em;
+  font-weight: 600;
+  color: hsl(var(--primary));
+}
+
+/* kbd 快捷键提示 */
+.kbd {
+  display: inline-block;
+  min-width: 1.35em;
+  padding: 0.05em 0.4em;
+  border: 1px solid hsl(var(--border));
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: hsl(var(--card));
+  font-size: 0.75em;
+  text-align: center;
+  color: hsl(var(--muted-foreground));
+}
+
+/* ── 动效（克制，指数缓出） ─────────────────── */
+
+/* NowCard 一次性入场：fade + 轻微上浮 */
+@keyframes enter-scholarly {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.enter-scholarly {
+  animation: enter-scholarly 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* 新任务入场 */
+@keyframes task-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.task-enter {
+  animation: task-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 删除离场：淡出 + 右移 */
+.task-leaving {
+  opacity: 0;
+  transform: translateX(10px);
+  transition:
+    opacity 0.24s ease-in,
+    transform 0.24s ease-in;
+}
+
+/* 任务行：完成态下沉 + 划线生长 */
+.task-row {
+  transition:
+    opacity 0.3s ease,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.3s ease;
+}
+.task-done {
+  opacity: 0.52;
+  transform: translateY(1px);
+}
+.task-title {
+  position: relative;
+  transition: color 0.3s ease;
+}
+.task-title::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  right: auto;
+  top: 55%;
+  height: 1.5px;
+  width: 0;
+  background: hsl(var(--muted-foreground));
+  transition: width 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.task-done .task-title {
+  color: hsl(var(--muted-foreground));
+}
+.task-done .task-title::after {
+  width: calc(100% + 2px);
+}
+
+/* 行 hover：细 lift + 桌面端浮现操作按钮（触屏常显） */
+@media (hover: hover) and (pointer: fine) {
+  .task-row:hover {
+    transform: translateY(-1px);
+  }
+  .task-done:hover {
+    transform: translateY(0);
+  }
+  .task-actions {
+    opacity: 0;
+    transition: opacity 0.18s ease;
+  }
+  .task-row:hover .task-actions,
+  .task-row:focus-within .task-actions {
+    opacity: 1;
+  }
+}
+
+/* 按钮按压反馈 */
+button:not(:disabled) {
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter;
+  transition-duration: 0.15s;
+}
+button:not(:disabled):active {
+  transform: scale(0.97);
+}
+.task-actions button:active {
+  transform: scale(0.94);
+}
+
+/* 连续打卡火焰：呼吸脉动（无记录时熄灭不跳） */
+@keyframes flame-breathe {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+.flame-lit {
+  transform-origin: 50% 85%;
+  animation: flame-breathe 1.8s ease-in-out infinite alternate;
+}
+
+/* 主题切换过渡 */
+body {
+  transition:
+    background-color 0.35s ease,
+    color 0.2s ease;
+}
+
+/* 减少动态偏好：保留状态变化，去掉空间位移 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .enter-scholarly,
+  .task-enter {
+    animation-duration: 0.01s;
+  }
+  .task-title::after {
+    transition-duration: 0.1s;
+  }
+  .task-leaving {
+    transition-duration: 0.1s;
+    transform: none;
+  }
+  .task-row,
+  .task-row:hover {
+    transform: none !important;
+  }
+  .flame-lit {
+    animation: none;
+  }
+  button:not(:disabled):active {
+    transform: none;
+  }
+}
